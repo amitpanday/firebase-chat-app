@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "501379628538",
+    "firebase_url": "https://fcm-notification-chat.firebaseio.com",
+    "project_id": "fcm-notification-chat",
+    "storage_bucket": "fcm-notification-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501379628538:android:b40b72e5dc558e41a33843",
+        "android_client_info": {
+          "package_name": "com.fcm_notification_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501379628538-7cbqlgnbid532nn70ureia5nndiuhr36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKSyvCLuXVB3GFvAZCuO1Cq46vG4zaDGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501379628538-7cbqlgnbid532nn70ureia5nndiuhr36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
