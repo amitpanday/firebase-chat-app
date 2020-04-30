@@ -1,9 +1,9 @@
 import FirebaseService from './firebase'
 import UserContext from './context';
-
-const firebaseService = new FirebaseService()
+import Notification from './notification'
 
 export {
-  firebaseService,
-  UserContext
+  FirebaseService,
+  UserContext,
+  Notification
 }

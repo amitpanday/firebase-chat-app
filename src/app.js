@@ -1,31 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import ClassExample from './components/screen/classexample';
+import React from 'react';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { Root } from 'native-base';
+
+import Home from './components/screen/home';
 import Loader from '~/components/common/loader';
-import { firebaseService, UserContext } from './lib'
+
+
+const authNavigator = createStackNavigator(
+  {
+    Login: Loader
+  },
+  {
+    initialRouteName: "Login",
+    headerMode: 'none',
+  }
+);
+
+const appNavigator = createStackNavigator(
+  {
+    Home: Home
+  },
+  {
+    initialRouteName: "Home",
+    headerMode: 'none',
+  }
+);
+
+const AppNavContainer = createAppContainer(
+  createSwitchNavigator(
+    {
+      Auth: authNavigator,
+      App: appNavigator,
+      Loader: Loader
+    },
+    {
+      initialRouteName: 'Loader',
+    }
+  )
+);
+
 
 const App = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    firebaseService.signIn().then((user) => {
-      const userData = user.user;
-      setUser(userData);
-    })
-      .catch(error => {
-        alert('Something went wrong');
-        return false;
-      });
-
-  }, [false]);
-
-  if (!user) {
-    return <Loader />
-  }
 
   return (
-    <UserContext.Provider value={user}>
-      <ClassExample />
-    </UserContext.Provider>
+    <Root>
+      <AppNavContainer />
+    </Root>
   );
 }
 

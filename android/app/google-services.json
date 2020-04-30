@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "501379628538",
-    "firebase_url": "https://fcm-notification-chat.firebaseio.com",
-    "project_id": "fcm-notification-chat",
-    "storage_bucket": "fcm-notification-chat.appspot.com"
+    "project_number": "954500839170",
+    "firebase_url": "https://friendlychat-bf479.firebaseio.com",
+    "project_id": "friendlychat-bf479",
+    "storage_bucket": "friendlychat-bf479.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:501379628538:android:b40b72e5dc558e41a33843",
+        "mobilesdk_app_id": "1:954500839170:android:a7e29408e7e07f1271b41b",
         "android_client_info": {
           "package_name": "com.fcm_notification_chat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "501379628538-7cbqlgnbid532nn70ureia5nndiuhr36.apps.googleusercontent.com",
+          "client_id": "954500839170-o9ihvu4kj93f2s1hraijjli89s0ectii.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCKSyvCLuXVB3GFvAZCuO1Cq46vG4zaDGQ"
+          "current_key": "AIzaSyBQX5GcoFm8mLzMigTDhZ_3qTC-4tvKFeA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "501379628538-7cbqlgnbid532nn70ureia5nndiuhr36.apps.googleusercontent.com",
+              "client_id": "954500839170-o9ihvu4kj93f2s1hraijjli89s0ectii.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

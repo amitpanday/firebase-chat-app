@@ -1,3 +1,4 @@
 export default {
-  MESSAGES: 'messages'
+  MESSAGES: 'messages',
+  USERS: 'users',
 }
