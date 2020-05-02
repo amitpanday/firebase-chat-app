@@ -3,23 +3,27 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Root } from 'native-base';
 
-import Home from './components/screen/home';
 import Loader from '~/components/common/loader';
-
+import SignUp from '~/components/screen/signup';
+import Login from '~/components/screen/login';
+import Home from './components/screen/home';
+import SingleChat from './components/screen/chat/singleChat'
 
 const authNavigator = createStackNavigator(
   {
-    Login: Loader
+    SignUp: SignUp,
+    Login: Login
   },
   {
-    initialRouteName: "Login",
+    initialRouteName: "SignUp",
     headerMode: 'none',
   }
 );
 
 const appNavigator = createStackNavigator(
   {
-    Home: Home
+    Home: Home,
+    SingleChat: SingleChat
   },
   {
     initialRouteName: "Home",
@@ -35,7 +39,7 @@ const AppNavContainer = createAppContainer(
       Loader: Loader
     },
     {
-      initialRouteName: 'Loader',
+      initialRouteName: 'Auth',
     }
   )
 );

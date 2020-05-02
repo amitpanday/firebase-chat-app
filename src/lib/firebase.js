@@ -1,28 +1,40 @@
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
+import firestore from '@react-native-firebase/firestore';
 import { COLLECTIONS } from '~/config'
 
 
 const fireBaseService = {
 
-  createUserInFireBase: function (email, password) {
-    return auth().createUserWithEmailAndPassword('pandaygamit584@gmail.com', '12345678');
+  signUpUser: function (data, dispatch) {
+    auth().createUserWithEmailAndPassword(data.email, data.password)
+      .then((result) => {
+        const uid = result.uers.uid;
+        fireBaseService.insertUserIntoUserTable(uid, data);
+      })
   },
-  insertUserIntoUserTable: function (data) {
+  insertUserIntoUserTable: function (uid, data) {
     database()
       .ref(COLLECTIONS.USERS)
       .push()
       .set({
-        user_id: data.uid,
+        user_id: uid,
         email: data.email,
         imageUrl: '',
         name: data.name,
         profilePicUrl: '',
       });
   },
-  signInUser: function (email, password) {
-    const user = auth().signInWithEmailAndPassword('pandaygamit584@gmail.com', '12345678');
-    return user;
+  signInUser: function (email, password, dispatch) {
+    auth().signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        dispatch({
+          type: 'signIn',
+          data: user,
+          error: false,
+          loading: false
+        });
+      });
   },
   logOutUser: function () {
     auth().signOut()
@@ -32,6 +44,27 @@ const fireBaseService = {
     const subscriber = auth().onAuthStateChanged(this.onAuthStateChanged);
     console.log("subscriber =>", subscriber);
   },
+
+  getAllUser: function (dispatch) {
+    firestore()
+      .collection(COLLECTIONS.USERS)
+      .get()
+      .then(querySnapshot => {
+        const users = [];
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data()
+          });
+        });
+        dispatch({
+          type: 'users',
+          data: users,
+          error: false,
+          loading: false
+        })
+      });
+  },
+
   sendUserMessage: function (data) {
     const date = new Date().getTime();
     database()

@@ -16,7 +16,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5
   },
+  button: {
+    justifyContent: 'center',
+    width: '60%',
+    height: 45,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: '#000'
+  },
   btnText: {
+    textAlign: 'center',
     color: '#000',
     fontSize: 22
   }

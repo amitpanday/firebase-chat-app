@@ -8,7 +8,7 @@ import styles from './styles'
 
 
 export default function Input() {
-  const { uid } = useContext(UserContext);
+  const uid = 123456789;
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
   const handlePress = useCallback(

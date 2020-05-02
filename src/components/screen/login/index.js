@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, Alert, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Alert,
+  TextInput,
+  TouchableOpacity
+} from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import actions from '~/store/actions';
 
 import styles from './styles';
 
@@ -8,40 +17,51 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      phone: '',
-      name: ''
+      email: '',
+      password: ''
     }
   }
 
-  submitHandler = () => {
-    if (this.state.phone < 10) {
-      Alert.alert('Error', 'Wrong Number');
-    } else if (this.state.name < 3) {
-      Alert.alert('Error', 'Wrong Name');
-    } else {
-      //save user data
+  submitUserData = () => {
+
+    // this.validateUserData();
+    const { authAction, authData } = this.props;
+    const email = 'pandaygamit584@SpeechGrammarList.com';                            //this.state.email;
+    const password = 12345678;                         //this.state.password;
+
+    authAction.signIn(email, password);
+    this.props.navigation.navigate('Home');
+  }
+
+  validateUserData = () => {
+    if (this.state.email === '') {
+      Alert.alert('Error', 'Wrong email');
+      return;
+    } else if (this.state.password < 3) {
+      Alert.alert('Error', 'Wrong password');
+      return;
     }
   }
 
   render() {
-    console.log(this.state.phone);
     return (
       <View style={styles.container}>
         <TextInput
-          placeholder={'Phone Number'}
-          keyboardType={'number-pad'}
-          value={this.state.phone}
+          placeholder={'Enter email'}
+          keyboardType={'email-address'}
+          value={this.state.email}
           style={styles.input}
-          onChangeText={(phone) => this.setState({ phone })}
+          onChangeText={(email) => this.setState({ email })}
         />
         <TextInput
-          placeholder={'Name'}
-          value={this.state.name}
+          placeholder={'Enter password'}
+          value={this.state.password}
           style={styles.input}
-          onChangeText={(name) => this.setState({ name })}
+          onChangeText={(password) => this.setState({ password })}
         />
         <TouchableOpacity
-          onPress={this.submitHandler}
+          style={styles.button}
+          onPress={this.submitUserData}
         >
           <Text style={styles.btnText}>Enter</Text>
         </TouchableOpacity>
@@ -50,5 +70,18 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => {
 
-export default Login;
+  return {
+    authData: state.Auth,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+
+  return {
+    authAction: bindActionCreators(actions.AuthAction, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,15 +1,14 @@
-import React from 'react';
+import React from 'react'
+import { Provider } from 'react-redux'
 import AppContainer from '../app';
-import { UserContext } from '../lib'
+import store from '~/store';
 
 const App = () => {
 
-  const user = null;
-
   return (
-    <UserContext.Provider value={user}>
+    <Provider store={store}>
       <AppContainer />
-    </UserContext.Provider>
+    </Provider>
   );
 }
 

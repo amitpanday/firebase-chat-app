@@ -1,104 +1,80 @@
-import React from 'react'
-import { FlatList, SafeAreaView, View } from 'react-native';
-import { Container, Header, Drawer, Title, Content, Button, Icon, Left, Body, Text } from 'native-base';
-import { firebaseService, UserContext } from '~/lib';
-import Message from '~/components/ui/message'
-import Input from '~/components/ui/input'
-import { chatRoomStyles as styles } from '~/styles'
-import SideBar from '../../common/sidebar'
+import React, { Component } from 'react'
+import { FlatList, View, Text, TouchableOpacity, Image } from 'react-native';
+import { Icon } from 'native-base';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import actions from '~/store/actions';
+import styles from './styles';
 
-export default class ClassExample extends React.Component {
-  static contextType = UserContext;
-  state = {
-    messages: []
+
+class Home extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: ''
+    };
   }
-
-  unsubscribe = null
 
   componentDidMount() {
-    this.unsubscribe = firebaseService.fetchMessages()
-      .orderByChild('created_at', 'desc')
-      .on('value', snapshot => {
-        const messages = snapshot.val();
-        console.log('messages =>', messages);
-        if (messages) {
-          this.responseMessage(messages);
-        }
-      });
-  }
-
-  componentWillUnmount() {
-    firebaseService.logOutUser();
-  }
-
-  responseMessage = (messages) => {
-    let newMessage = new Array();
-    for (let [key, value] of Object.entries(messages)) {
-      newMessage.push(value);
-    }
-    newMessage.sort((a, b) => {
-      return new Date(b.created_at) - new Date(a.created_at);
+    const { authAction, authData } = this.props;
+    authAction.getAllUser();
+    this.setState({
+      data: authData.users
     });
-    console.log(newMessage);
-    this.setState({ messages: newMessage });
   }
 
-  componentWillUnmount() {
-    this.unsubscribe && this.unsubscribe()
-  }
-
-  closeDrawer = () => {
-    this._drawer._root.close();
-  }
-  openDrawer = () => {
-    this._drawer._root.open();
+  renderActiveUser = ({ item }) => {
+    const { image, name, user_id } = item;
+    return (
+      <TouchableOpacity
+        key={user_id}
+        style={styles.item}
+        onPress={() => this.props.navigation.navigate('SingleChat', {
+          user_id: user_id
+        })}
+      >
+        <View style={styles.imageContent}>
+          <View style={styles.image}>
+            {image ?
+              <Image source={image} style={styles.userImage} />
+              :
+              <Icon name={'person'} style={styles.userIcon} />
+            }
+          </View>
+        </View>
+        <View style={styles.titleContent}>
+          <Text style={styles.title}>{name}</Text>
+        </View>
+      </TouchableOpacity>
+    );
   }
 
   render() {
-    const user_id = this.context.uid.toString();
     return (
-      <Drawer
-        ref={(ref) => { this._drawer = ref; }}
-        content={<SideBar />} >
-        <Container>
-          <Header style={{ backgroundColor: '#C0C0C0' }}>
-            <Left>
-              <Button transparent onPress={this.openDrawer.bind(this)}>
-                <Icon style={styles.icon} name='menu' />
-              </Button>
-            </Left>
-            <Body style={styles.body}>
-              <Title style={{ color: '#FFF' }}> title </Title>
-            </Body>
-          </Header>
-          <Content>
-            <View style={styles.inputContainer}>
-              <Input />
-            </View>
-          </Content>
-        </Container>
-      </Drawer>
-      // <SafeAreaView>
-      //   <View style={styles.messagesContainer}>
-      //     <FlatList
-      //       inverted
-      //       data={this.state.messages}
-      //       keyExtractor={function (item) {
-      //         return item.created_at.toString();
-      //       }}
-      //       renderItem={function ({ item }) {
-      //         const side = item.user_id.toString() === user_id ? 'right' : 'left'
-      //         return (
-      //           <Message side={side} message={item.message} />
-      //         )
-      //       }}
-      //     />
-      //   </View>
-
-      // <View style={styles.inputContainer}>
-      //   <Input />
-      // </View>
-      // </SafeAreaView>
-    )
+      <View style={styles.container}>
+        <FlatList
+          data={this.state.data}
+          renderItem={(item) => this.renderActiveUser(item)}
+          keyExtractor={item => item.index}
+        />
+      </View>
+    );
   }
 }
+
+const mapStateToProps = state => {
+
+  return {
+    authData: state.Auth,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+
+  return {
+    authAction: bindActionCreators(actions.AuthAction, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
