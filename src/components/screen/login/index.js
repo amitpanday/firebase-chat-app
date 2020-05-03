@@ -26,9 +26,8 @@ class Login extends Component {
 
     // this.validateUserData();
     const { authAction, authData } = this.props;
-    const email = 'pandaygamit584@SpeechGrammarList.com';                            //this.state.email;
-    const password = 12345678;                         //this.state.password;
-
+    const email = 'Last@gmail.com';                            //this.state.email;
+    const password = '12345678';                         //this.state.password;
     authAction.signIn(email, password);
     this.props.navigation.navigate('Home');
   }

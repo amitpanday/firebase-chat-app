@@ -1,27 +1,22 @@
-import React, { useCallback, useState, useContext } from 'react'
+import React, { useCallback, useState } from 'react'
 import { View, TextInput } from 'react-native'
-import { firebaseService, UserContext } from '~/lib';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import actions from '~/store/actions';
+
 import Button from '~/components/common/button'
 import Loader from '~/components/common/loader'
 
 import styles from './styles'
 
-
-export default function Input() {
-  const uid = 123456789;
-  const [isLoading, setIsLoading] = useState(false);
+const input = (props) => {
+  const { authData, receiverUserId, sendMessage } = props;
+  const { user_id, name } = authData;
   const [message, setMessage] = useState('');
-  const handlePress = useCallback(
-    function () {
-      setIsLoading(true)
-      firebaseService.createMessage(message, uid)
-        .then(() => {
-          setIsLoading(false)
-          setMessage('')
-        });
-    },
-    [message]
-  )
+  // const sendToUserMessage = () => {
+  //   sendMessage.sendMessage(name, user_id, receiverUserId, message);
+  // }
+  console.log(authData);
 
   return (
     <View style={styles.container}>
@@ -35,10 +30,24 @@ export default function Input() {
 
       <Button
         text="Send"
-        onPress={handlePress}
-        disabled={isLoading} />
-
-      {isLoading && <Loader />}
+      // onPress={sendToUserMessage}
+      />
     </View>
   )
 }
+
+const mapStateToProps = state => {
+
+  return {
+    authData: state.Auth,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+
+  return {
+    sendMessage: bindActionCreators(actions.MessageAction, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(input);

@@ -26,10 +26,10 @@ class SignUp extends Component {
       password: this.state.password
     };
     authAction.signUp(data);
+    this.props.navigation.navigate('Home');
   }
 
   render() {
-    console.log(this.props.authAction);
     return (
       <Container>
         <View style={styles.container}>

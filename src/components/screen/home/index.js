@@ -11,17 +11,11 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      data: ''
-    };
   }
 
   componentDidMount() {
-    const { authAction, authData } = this.props;
+    const { authAction } = this.props;
     authAction.getAllUser();
-    this.setState({
-      data: authData.users
-    });
   }
 
   renderActiveUser = ({ item }) => {
@@ -51,10 +45,11 @@ class Home extends Component {
   }
 
   render() {
+    let data = this.props.authData.users;
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.state.data}
+          data={data}
           renderItem={(item) => this.renderActiveUser(item)}
           keyExtractor={item => item.index}
         />

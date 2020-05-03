@@ -1,6 +1,12 @@
 import { FirebaseService } from '~/lib';
 
-const auth = {
+const message = {
+
+  sendMessage: function (name, senderId, receiverId, message) {
+    return dispatch => {
+      FirebaseService.sendMessage(name, senderId, receiverId, message, dispatch);
+    }
+  },
 
   getMessageByUserId: function (data) {
     return dispatch => {
@@ -11,4 +17,4 @@ const auth = {
 
 };
 
-export default auth;
+export default message;

@@ -10,6 +10,7 @@ class SingleChat extends Component {
   }
 
   render() {
+    const receiverUserId = this.props.navigation.getParam('user_id');
     return (
       <SafeAreaView>
         <View style={styles.messagesContainer}>
@@ -29,7 +30,7 @@ class SingleChat extends Component {
         </View>
 
         <View style={styles.inputContainer}>
-          <Input />
+          <Input receiverUserId={receiverUserId} />
         </View>
       </SafeAreaView>
     )
