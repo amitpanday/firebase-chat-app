@@ -14,9 +14,9 @@ const auth = {
     }
   },
 
-  getAllUser: function () {
+  getAllUser: function (currentUserId) {
     return dispatch => {
-      FirebaseService.getAllUser(dispatch);
+      FirebaseService.getAllUser(currentUserId, dispatch);
     }
   }
 

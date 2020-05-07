@@ -17,5 +17,18 @@ export default StyleSheet.create({
 
     borderTopWidth: 1,
     borderTopColor: COLORS.GREY
+  },
+  header: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 60,
+    backgroundColor: '#ddd'
+  },
+  headerText: {
+    textAlign: 'center',
+    fontSize: 22,
+    color: '#000'
   }
 })

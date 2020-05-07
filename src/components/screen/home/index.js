@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FlatList, View, Text, TouchableOpacity, Image } from 'react-native';
-import { Icon } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import actions from '~/store/actions';
@@ -14,26 +13,27 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const { authAction } = this.props;
-    authAction.getAllUser();
+    const { authAction, authData } = this.props;
+    const currentUserId = authData.authData.user_id;
+    authAction.getAllUser(currentUserId);
   }
 
   renderActiveUser = ({ item }) => {
-    const { image, name, user_id } = item;
+    const { imageUrl, profilePicUrl, name, user_id } = item;
     return (
       <TouchableOpacity
         key={user_id}
         style={styles.item}
         onPress={() => this.props.navigation.navigate('SingleChat', {
-          user_id: user_id
+          receiverData: item
         })}
       >
         <View style={styles.imageContent}>
           <View style={styles.image}>
-            {image ?
-              <Image source={image} style={styles.userImage} />
+            {imageUrl ?
+              <Image source={imageUrl} style={styles.userImage} />
               :
-              <Icon name={'person'} style={styles.userIcon} />
+              <Image source={{ uri: profilePicUrl }} style={styles.userImage} />
             }
           </View>
         </View>
@@ -48,6 +48,19 @@ class Home extends Component {
     let data = this.props.authData.users;
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.leftSide}>
+            <Text style={styles.title}>Contact List</Text>
+          </View>
+          <View style={styles.rightSide}>
+            <TouchableOpacity
+              style={styles.groupButton}
+              onPress={() => this.props.navigation.navigate('GroupChat')}
+            >
+              <Text style={styles.groupButtonText}>Group Chat</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <FlatList
           data={data}
           renderItem={(item) => this.renderActiveUser(item)}

@@ -7,7 +7,9 @@ import Loader from '~/components/common/loader';
 import SignUp from '~/components/screen/signup';
 import Login from '~/components/screen/login';
 import Home from './components/screen/home';
-import SingleChat from './components/screen/chat/singleChat'
+import SingleChat from './components/screen/chat/singleChat';
+import GroupChat from './components/screen/chat/groupChat';
+
 
 const authNavigator = createStackNavigator(
   {
@@ -23,7 +25,8 @@ const authNavigator = createStackNavigator(
 const appNavigator = createStackNavigator(
   {
     Home: Home,
-    SingleChat: SingleChat
+    SingleChat: SingleChat,
+    GroupChat: GroupChat
   },
   {
     initialRouteName: "Home",

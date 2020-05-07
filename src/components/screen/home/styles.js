@@ -10,14 +10,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#ddd'
   },
-  fabButton: {
-    backgroundColor: '#fff',
-    elevation: 10
-  },
-  addIcon: {
-    fontSize: (width / 10),
-    color: '#326fa8'
-  },
   item: {
     justifyContent: 'center',
     alignContent: 'center',
@@ -65,5 +57,35 @@ export default StyleSheet.create({
   userIcon: {
     fontSize: (width / 10),
     color: '#000'
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: width,
+    backgroundColor: 'lightblue'
+  },
+  groupButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    height: 40,
+    width: 80,
+    marginRight: 10,
+    borderRadius: 10
+  },
+  leftSide: {
+    justifyContent: 'flex-start',
+    marginLeft: 10
+  },
+  rightSide: {
+    justifyContent: 'flex-end',
+  },
+  groupButtonText: {
+    fontSize: (width / 25),
+    color: '#000',
+    opacity: 0.8
   }
 });

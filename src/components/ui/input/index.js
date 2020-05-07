@@ -11,13 +11,16 @@ import styles from './styles'
 
 const input = (props) => {
   const { authData, receiverUserId, sendMessage } = props;
-  const { user_id, name } = authData;
+  const { profilePicUrl, name, user_id } = authData.authData;
   const [message, setMessage] = useState('');
-  // const sendToUserMessage = () => {
-  //   sendMessage.sendMessage(name, user_id, receiverUserId, message);
-  // }
-  console.log(authData);
-
+  const sendMessageToUser = () => {
+    if (receiverUserId) {
+      sendMessage.sendMessage(name, user_id, profilePicUrl, receiverUserId, message);
+    } else {
+      sendMessage.sendGroupMessages(name, user_id, profilePicUrl, message);
+    }
+    setMessage('');
+  }
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -30,7 +33,7 @@ const input = (props) => {
 
       <Button
         text="Send"
-      // onPress={sendToUserMessage}
+        onPress={sendMessageToUser}
       />
     </View>
   )

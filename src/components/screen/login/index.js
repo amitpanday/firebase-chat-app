@@ -18,31 +18,45 @@ class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      loading: true
     }
+    this.validateUserData = this.validateUserData.bind(this);
   }
 
   submitUserData = () => {
 
-    // this.validateUserData();
-    const { authAction, authData } = this.props;
-    const email = 'Last@gmail.com';                            //this.state.email;
-    const password = '12345678';                         //this.state.password;
-    authAction.signIn(email, password);
-    this.props.navigation.navigate('Home');
+    if (this.validateUserData()) {
+      const { authAction, authData } = this.props;
+      const email = this.state.email;
+      const password = this.state.password;
+      authAction.signIn(email, password);
+      if (!authData.loading) {
+        this.navigateToHomePage();
+      }
+    }
   }
 
   validateUserData = () => {
     if (this.state.email === '') {
-      Alert.alert('Error', 'Wrong email');
-      return;
-    } else if (this.state.password < 3) {
-      Alert.alert('Error', 'Wrong password');
-      return;
+      Alert.alert('Required', 'Invalid email & password !');
+      return false;
+    } else if (this.state.password === '') {
+      Alert.alert('Required', 'Invalid email & password!');
+      return false;
     }
+    return true;
+  }
+
+  navigateToHomePage = () => {
+    this.props.navigation.navigate('Home');
   }
 
   render() {
+    const { authData } = this.props;
+    if (!authData.loading) {
+      this.navigateToHomePage();
+    }
     return (
       <View style={styles.container}>
         <TextInput

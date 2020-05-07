@@ -13,22 +13,19 @@ class SingleChat extends Component {
   }
 
   componentDidMount() {
-    const { messageAction, authData } = this.props;
-    const userId = authData.authData.user_id;
-    const receiverData = this.props.navigation.getParam('receiverData');
-    messageAction.getUserMessages(userId, receiverData.user_id);
+    const { messageAction } = this.props;
+    messageAction.getGroupMessages();
   }
 
   render() {
     const { authData, messages } = this.props;
-    const userMessages = messages.messages;
+    const userMessages = messages.groupMessages;
     const userId = authData.authData.user_id;
-    const receiverData = this.props.navigation.getParam('receiverData');
     return (
       <SafeAreaView>
         <View style={styles.messagesContainer}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>{receiverData.name}</Text>
+            <Text style={styles.headerText}>Group Chat</Text>
           </View>
           <FlatList
             inverted
@@ -46,7 +43,7 @@ class SingleChat extends Component {
         </View>
 
         <View style={styles.inputContainer}>
-          <Input receiverUserId={receiverData.user_id} />
+          <Input receiverUserId={false} />
         </View>
       </SafeAreaView>
     )
